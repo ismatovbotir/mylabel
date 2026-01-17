@@ -27,12 +27,12 @@ class CompanySearch extends Component
     }
     
     public function refreshCompany(){
-       $adinesURL=rtrim(env('ADINES_SERVER'), '/') . ':' . env('ADINES_PORT') . '/base/hs/crm/company';
+       $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/crm/company';
        //dd($adinesURL); 
        $res = Http::acceptJson()
     ->withBasicAuth(
-        env('ADINES_USER'),
-        env('ADINES_PASSWORD')
+        $this->adines_user,
+        $this->adines_password
     )
     ->timeout(15)
     ->get($adinesURL);
@@ -62,10 +62,15 @@ class CompanySearch extends Component
         
     }
     public function companyCreate(){
-        $res = Http::withHeaders([
-            'Authorization' => 'Basic YWRtaW46aW5mb0Bwb3MudXo=',
-            'Accept' => 'application/json'
-        ])->post('localhost:8000/base/hs/clients/newClient',[
+        $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/crm/company';
+      
+        $res = Http::acceptJson()
+        ->withBasicAuth(
+            $this->adines_user,
+            $this->adines_password
+        )
+        ->timeout(15)
+        ->post($adinesURL,[
             'stir'=>$this->search
         ]);
         if($res->status()==200){
