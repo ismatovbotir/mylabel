@@ -20,9 +20,8 @@ class CompanySearch extends Component
     
     public function refreshCompany(){
         $res = Http::withHeaders([
-            'Authorization' => 'Basic YWRtaW46aW5mb0Bwb3MudXo=',
             'Accept' => 'application/json'
-        ])->get('localhost:8000/base/hs/crm/company');
+        ])->withBasicAuth(env('ADINES_USER'), env('ADINES_PASSWORD'))->get(env('ADINES_SERVER').':'.env('ADINES_PORT').'/base/hs/crm/company');
         if($res->status()==200){
                 $jsonData=$res->json();
                 //dd($jsonData['data']);
