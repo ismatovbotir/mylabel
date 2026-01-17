@@ -11,16 +11,24 @@ class CompanySearch extends Component
 {
     use WithPagination; 
     public string $search='';
+    public $adines_server;
+    public $adines_port;
+    public $adines_user;
+    public $adines_password;
     public $addCompany=false;
     //public $data;
     public function mount(){
+        $this->adines_server=env('ADINES_SERVER');
+        $this->adines_port=env('ADINES_PORT');
+        $this->adines_user=env('ADINES_USER');
+        $this->adines_password=env('ADINES_PASSWORD');
         //$this->data=Company::where('stir','<>',null)->paginate(15);
        // dd($this->data);
     }
     
     public function refreshCompany(){
        $adinesURL=rtrim(env('ADINES_SERVER'), '/') . ':' . env('ADINES_PORT') . '/base/hs/crm/company';
-       dd($adinesURL); 
+       //dd($adinesURL); 
        $res = Http::acceptJson()
     ->withBasicAuth(
         env('ADINES_USER'),
@@ -46,7 +54,7 @@ class CompanySearch extends Component
                 }
                 //dd($companies);
         }else{
-            //dd($res);
+            dd($res);
         }
         
        
