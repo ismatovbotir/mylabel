@@ -21,6 +21,10 @@ class Items extends Component
     public $order;
     public $id;
 
+    public $adines_server;
+    public $adines_port;
+    public $adines_user;
+    public $adines_password;
 
 
     public function mount($id)
@@ -32,6 +36,10 @@ class Items extends Component
         //$this->orderItems[]=$this->def;
         $this->orderItems = OrderItem::where('order_id', $id)->with('item')->get();
         //dd($this->orderItems);
+        $this->adines_server=env('ADINES_SERVER');
+        $this->adines_port=env('ADINES_PORT');
+        $this->adines_user=env('ADINES_USER');
+        $this->adines_password=env('ADINES_PASSWORD');
     }
 
     public function updatedSearch($value, $key)
@@ -101,9 +109,17 @@ class Items extends Component
         //$telegram->sendMessage('bill','','',2, ($order->toArray()));
         //dd($order->toArray());
         try{
-            $response = Http::withBasicAuth('Admin', 'info@pos.uz')
-                ->withBody(json_encode($order->toArray()))
-                ->post("127.0.0.1:8000/base/hs/clients/order");
+
+            $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/clients/order';
+      
+            $response =Http::acceptJson()
+            ->withBasicAuth(
+                $this->adines_user,
+                $this->adines_password
+            )
+            ->timeout(15) 
+            ->withBody(json_encode($order->toArray()))
+            ->post($adinesURL);
            // dd($response->body());
             if ($response->successful()) {
                // dd($response->status());

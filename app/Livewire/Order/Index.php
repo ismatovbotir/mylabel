@@ -24,9 +24,18 @@ class Index extends Component
     public $company='';
     public $dItems=[];
     public $current_order=null;
+
+    public $adines_server;
+    public $adines_port;
+    public $adines_user;
+    public $adines_password;
     
     public function mount()
     {
+        $this->adines_server=env('ADINES_SERVER');
+        $this->adines_port=env('ADINES_PORT');
+        $this->adines_user=env('ADINES_USER');
+        $this->adines_password=env('ADINES_PASSWORD');
        
     }
     public function newOrder(){
@@ -116,13 +125,21 @@ class Index extends Component
             }
             
             try{
-                $response = Http::withBasicAuth('Admin', 'info@pos.uz')
+                $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/clients/delivery';
+      
+       
+                $response = Http::acceptJson()
+                ->withBasicAuth(
+                    $this->adines_user,
+                    $this->adines_password
+                )
+                ->timeout(15)
                 ->withBody(json_encode([
                     "order_id"=>$this->current_order->id,
                     "delivery_id"=>$delivery->id,
                     "delivery"=>$this->dItems
                 ]))
-                ->post("http://127.0.0.1:8000/base/hs/clients/delivery");
+                ->post($adinesURL);
                // dd($response->body());
                if($response->successful()){
                     $this->sendTelegramMessage($response->body());

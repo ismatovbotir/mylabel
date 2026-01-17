@@ -12,12 +12,30 @@ class Index extends Component
 {
     use WithPagination; 
     public string $search='';
-   
+    public $adines_server;
+    public $adines_port;
+    public $adines_user;
+    public $adines_password;
+    
+    public function mount(){
+        $this->adines_server=env('ADINES_SERVER');
+        $this->adines_port=env('ADINES_PORT');
+        $this->adines_user=env('ADINES_USER');
+        $this->adines_password=env('ADINES_PASSWORD');
+        
+    }
+    
+
     public function refreshItems(){
-        $res = Http::withHeaders([
-            'Authorization' => 'Basic YWRtaW46aW5mb0Bwb3MudXo=',
-            'Accept' => 'application/json'
-        ])->get('localhost:8000/base/hs/crm/item');
+        $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/crm/item';
+      
+        $res = Http::acceptJson()
+        ->withBasicAuth(
+            $this->adines_user,
+            $this->adines_password
+        )
+        ->timeout(15)
+        ->get($adinesURL);
         if($res->status()==200){
                 $jsonData=$res->json();
                // dd($jsonData['data']);
