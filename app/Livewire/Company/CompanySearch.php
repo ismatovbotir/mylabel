@@ -20,16 +20,14 @@ class CompanySearch extends Component
     
     public function refreshCompany(){
        $adinesURL=rtrim(env('ADINES_SERVER'), '/') . ':' . env('ADINES_PORT') . '/base/hs/crm/company';
-      // dd($adinesURL); 
+       dd($adinesURL); 
        $res = Http::acceptJson()
     ->withBasicAuth(
         env('ADINES_USER'),
         env('ADINES_PASSWORD')
     )
     ->timeout(15)
-    ->get($adinesURL
-        
-    );
+    ->get($adinesURL);
       //dd($adinesURL);
         if($res->status()==200){
                 $jsonData=$res->json();
