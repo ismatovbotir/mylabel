@@ -55,7 +55,7 @@
                                 </td>
                                    <td class="nk-tb-col">
                                     @if($offer->public)
-                                    <a href="http://crm.mylabel.uz/offers/{{$offer->id}}" target="_blank">link</a>
+                                    <a href="https://mylabel.uz/offers/{{$offer->id}}" target="_blank">link</a>
                                    
                                     @endif
 
