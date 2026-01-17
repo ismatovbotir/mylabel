@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [RouteController::class,'index'])->middleware('auth')->name('index');
+Route::get('/', [RouteController::class,'index'])->name('index');
 
 //Route::resource('/telegram',TelegramController::class);
 Route::get('/sprt',function(){
@@ -53,7 +53,7 @@ Route::get('/livewire',function(){
     return view('livewire');
 });
 
-Route::group(['as'=>'admin.','middleware'=>'auth'],function(){
+Route::group(['as'=>'admin.','middleware'=>'auth','prefix'=>'crm'],function(){
     
     Route::group([],function(){
         Route::get('/company/refresh',[CompanyController::class,'refresh'])->name('company.refresh');
