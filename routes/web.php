@@ -55,6 +55,10 @@ Route::get('/livewire',function(){
 
 Route::group(['as'=>'admin.','middleware'=>'auth','prefix'=>'crm'],function(){
     
+    Route::get('/',function(){
+        return view('welcome');
+    });
+
     Route::group([],function(){
         Route::get('/company/refresh',[CompanyController::class,'refresh'])->name('company.refresh');
         Route::get('/company/{company}/newOrder',[CompanyController::class,'newOrder'])->name('company.newOrder');
