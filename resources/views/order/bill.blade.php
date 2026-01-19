@@ -19,8 +19,8 @@
 
         }
     </style>
-    <link rel="stylesheet" href="http://crm.mylabel.uz/assets/css/dashlite.css?ver=2.4.0">
-    <link id="skin-default" rel="stylesheet" href="http://crm.mylabel.uz/assets/css/theme.css?ver=2.4.0'">
+    <link rel="stylesheet" href="https://mylabel.uz/assets/css/dashlite.css?ver=2.4.0">
+    <link id="skin-default" rel="stylesheet" href="https://mylabel.uz/assets/css/theme.css?ver=2.4.0'">
     <style>
        * {
             font-family: DejaVu Sans, sans-serif;
