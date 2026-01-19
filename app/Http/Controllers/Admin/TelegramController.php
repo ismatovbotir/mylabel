@@ -103,7 +103,7 @@ class TelegramController extends Controller
             //     $total += $orderItem->qty * $orderItem->price;
             // }
             // $orderText .= "<b>Жами: </b>" . number_format($total, 0, '.', ' ');
-            $orderText .= "\nhttp://crm.mylabel.uz/bills/".$order->id;
+            $orderText .= "\nhttps://mylabel.uz/bills/".$order->id;
             //dd($orderText);
             switch($status){
                 case "bill":
