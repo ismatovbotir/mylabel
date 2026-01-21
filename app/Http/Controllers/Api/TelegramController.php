@@ -141,10 +141,39 @@ class TelegramController extends Controller
                 $type='video';
                 $content=json_encode($message['video']);
             }elseif(array_key_exists('voice',$message)){
-                    
-                $resOpenAI = Http::withToken(env('OPENAI_API_KEY'))
-                ->post('https://api.openai.com/v1/models');
-                $this->sendTelegram('1936361',json_encode($resOpenAI));
+                $fileId =
+                $message['voice']['file_id'];
+
+                $botToken = env('TELEGRAM_BOT_TOKEN');
+
+                $fileInfo = Http::get(
+                    "https://api.telegram.org/bot{$botToken}/getFile",
+                    ['file_id' => $fileId]
+                    )->json();
+
+                $filePath = $fileInfo['result']['file_path'];
+                $telegramFileUrl = "https://api.telegram.org/file/bot{$botToken}/{$filePath}";
+
+                $audioContent = Http::get($telegramFileUrl)->body();
+
+                $localPath = storage_path('app/telegram/audio.ogg');
+                
+                file_put_contents($localPath, $audioContent);    
+                
+                $response = Http::withToken(env('OPENAI_API_KEY'))
+                ->attach(
+                            'file',
+                            fopen($localPath, 'r'),
+                            'audio.ogg'
+                        )
+                ->post('https://api.openai.com/v1/audio/transcriptions', [
+                 'model' => 'whisper-1',
+                'language' => 'ru',
+            ]);
+
+                $text = $response->json('text');
+                
+                $this->sendTelegram($lead['id'],json_encode($text));
                 $type='voice';
                 $content=json_encode($message['voice']);
 
