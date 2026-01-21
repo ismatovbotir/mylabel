@@ -62,7 +62,7 @@ class CompanySearch extends Component
         
     }
     public function companyCreate(){
-        $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/crm/company';
+        $adinesURL=rtrim($this->adines_server, '/') . ':' . $this->adines_port . '/base/hs/cliets/newClient';
       
         $res = Http::acceptJson()
         ->withBasicAuth(
