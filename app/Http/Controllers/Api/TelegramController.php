@@ -141,8 +141,13 @@ class TelegramController extends Controller
                 $type='video';
                 $content=json_encode($message['video']);
             }elseif(array_key_exists('voice',$message)){
-                    $type='voice';
-                    $content=json_encode($message['voice']);
+                    
+                $resOpenAI = Http::withToken(env('OPENAI_API_KEY'))
+                ->post('https://api.openai.com/v1/models');
+                $this->sendTelegram('1936361',json_encode($resOpenAI));
+                $type='voice';
+                $content=json_encode($message['voice']);
+
             }elseif(array_key_exists('contact',$message)){
                 $type='contact';
                 $content=json_encode($message['contact']);
