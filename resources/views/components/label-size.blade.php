@@ -16,9 +16,9 @@
     <text x="{{ $w/2 }}" y="{{ $h/2 }}"
           text-anchor="middle"
           dominant-baseline="middle"
-          font-size="{{ $font }}"
-          font-weight="500"
-          fill="#000">
+          font-size="12px"
+          font-weight="700"
+          fill="grey">
         {{ $w }} × {{ $h }} mm
     </text>
 </svg>
