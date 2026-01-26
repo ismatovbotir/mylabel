@@ -16,7 +16,7 @@
     <text x="{{ $w/2 }}" y="{{ $h/2 }}"
           text-anchor="middle"
           dominant-baseline="middle"
-          font-size="12px"
+          font-size="1em"
           font-weight="700"
           fill="grey">
         {{ $w }} × {{ $h }} mm
