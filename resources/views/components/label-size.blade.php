@@ -17,7 +17,7 @@
           text-anchor="middle"
           dominant-baseline="middle"
           font-size="{{ $font }}"
-          font-weight="700"
+          font-weight="500"
           fill="#000">
         {{ $w }} × {{ $h }} mm
     </text>
