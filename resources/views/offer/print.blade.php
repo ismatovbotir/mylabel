@@ -113,6 +113,11 @@ td.photo-cell img {
     display: block;
     margin: 0 auto;
 }
+.label-preview svg {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+}
 
         /* Итог */
         .total {
@@ -126,6 +131,7 @@ td.photo-cell img {
             margin-top: 30px;
             font-size: 13px;
         }
+
     </style>
 </head>
 <body>
@@ -174,7 +180,9 @@ td.photo-cell img {
                 <td>{{$idx+1}}</td>
                 <td class="photo-cell">
                     @if($item->item->category_id==5)
+                    <div class="label-preview">
                         <x-label-size w="100" h="50" />
+                    </div>
                     @else
                         <img src="\images\items\{{$item->item->code}}.jpg" alt="">
                     @endif
