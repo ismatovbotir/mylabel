@@ -181,7 +181,7 @@ td.photo-cell img {
                 <td class="photo-cell">
                     @if($item->item->category_id==5)
                     <div class="label-preview">
-                        <x-label-size w="58" h="40" />
+                        <x-label-size :name="$item->item->short_name" />
                     </div>
                     @else
                         <img src="\images\items\{{$item->item->code}}.jpg" alt="">

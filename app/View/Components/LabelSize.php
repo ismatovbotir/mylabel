@@ -13,18 +13,41 @@ class LabelSize extends Component
     public float $padding;
     public float $radius;
     public float $font;
-    public function __construct(float $w=58, float $h=40)
+    public function __construct(string $name)
     {
-        $this->w = $w;
-        $this->h = $h;
+        $size=$this->parseLabelSize($name);
 
-        $base = min($w, $h);
+        $this->w = $size['w'];
+        $this->h = $size['h'];
+
+        $base = min($this->w, $this->h);
 
         $this->padding = round($base * 0.06, 1);
         $this->radius  = round($base * 0.08, 1);
         $this->font    = round($base * 0.28, 1);
     }
 
+    public function parseLabelSize(string $name): ?array
+    {
+        // приводим всё к нижнему регистру
+        $name = mb_strtolower($name);
+    
+        // заменяем разные символы на x
+        $name = str_replace(['×', '*', 'х'], 'x', $name);
+    
+        // ищем формат число x число
+        if (preg_match('/(\d{2,4})\s*x\s*(\d{2,4})/', $name, $m)) {
+            return [
+                'w' => (int) $m[1],
+                'h' => (int) $m[2],
+            ];
+        }
+    
+        return [
+            'w' => 58,
+            'h' => 40,
+        ];;
+    }
     /**
      * Get the view / contents that represent the component.
      */
