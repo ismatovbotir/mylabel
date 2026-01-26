@@ -172,7 +172,14 @@ td.photo-cell img {
             
             <tr>
                 <td>{{$idx+1}}</td>
-                <td class="photo-cell"><img src="\images\items\{{$item->item->code}}.jpg" alt=""></td>
+                <td class="photo-cell">
+                    @if($item->item->category_id==5)
+                        <x-label-size w="100" h="50" />
+                    @else
+                        <img src="\images\items\{{$item->item->code}}.jpg" alt="">
+                    @endif
+
+                </td>
                 <td class="cell-left" style="vertical-align:top;">
                     <p>{{$item->item->short_name=='' ? $item->item->acc_name : $item->item->short_name}}</p>
                     <p>{{$item->item->description!='' ? 'Характеристика:'.$item->item->description : ''}}</p>
