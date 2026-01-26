@@ -19,6 +19,6 @@
           font-size=".5rem"
           font-weight="700"
           fill="grey">
-        {{ $w }} × {{ $h }} mm
+        {{ $w }} × {{ $h }}
     </text>
 </svg>
