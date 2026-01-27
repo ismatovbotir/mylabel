@@ -17,7 +17,12 @@ class Offer extends Model
     public $guarded=[];
 
     public function items(){
-        return $this->hasMany(OfferItem::class);
+        //return $this->hasMany(OfferItem::class);
+        return $this->hasMany(OfferItem::class)
+        ->join('items', 'items.id', '=', 'offer_items.item_id')
+        ->orderBy('offer_items.parent_id')
+        ->orderBy('items.code')
+        ->select('offer_items.*');
     }
     public function company(){
         return $this->belongsTo(Company::class);
